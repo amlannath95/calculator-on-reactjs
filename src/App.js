@@ -19,6 +19,7 @@ const App = () => {
     res: 0,
   });
 
+  //When numericals are pressed
   const numClickHandler = (e) => {
     console.log(`e is ${e}`)
     e.preventDefault();
@@ -35,9 +36,9 @@ const App = () => {
             : calc.num + value,
         
             res: !calc.sign ? 0 :calc.res,
-      })
-    }
-  }
+      });
+    };
+  };
 
   const resetHandler = 0;
 
@@ -47,10 +48,26 @@ const App = () => {
 
   const equalsClickHandler = 0;
 
-  const signClickHandler = 0;
+  //When *-/+ is pressed
+  const signClickHandler = (e) => {
+    e.preventDefault();
+     
+  };
 
   //It handles decimal point
-  const commaClickHandler = 0;
+  const commaClickHandler = (e) => {
+    e.preventDefault();
+
+    const value = e.target.innerHTML;
+    console.log(`calc.num: ${calc.num}  !calc.num: $${!calc.num}`)
+    setCalc({
+      ...calc,
+      mum:
+        !calc.num.toString().includes(".")
+        ? calc.num + value
+        :calc.num,
+    });
+  };
 
   return (
     <Wrapper>
