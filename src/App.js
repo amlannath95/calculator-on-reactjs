@@ -12,6 +12,11 @@ const btnValues = [
   [0, ".", "="],
 ];
 
+const toLocaleString = (num) =>
+  String(num).replace(/(?<!\..*)(\d)(?=(?:\d{3})+(?:\.|$))/g, "$1 ");
+
+const removeSpaces = (num) => num.toString().replace(/\s/g, "");
+
 const App = () => {
   let [calc, setCalc] = useState({
     sign:"",
@@ -40,18 +45,75 @@ const App = () => {
     };
   };
 
-  const resetHandler = 0;
+  //Resets the value
+  const resetHandler = () => {
+    setCalc({
+      ...calc,
+      sign:"",
+      num: 0,
+      res: 0,
+    })
+  };
 
-  const invertClickHandler = 0;
+  //Inverts the numner by multiplying it with -1
+  const invertClickHandler = () => {
+    setCalc({
+      ...calc,
+      num: calc.num ? calc.num * -1 : 0,
+      res: calc.res ? calc.res * -1 : 0,
+      sign: "",
+    })
+    console.log(`calc.num: ${calc.num} calc.res: ${calc.res}`);
+  };
 
-  const percentClickHandler = 0;
+  const percentClickHandler = () => {
+    let num = calc.num ? parseFloat(calc.num) : 0;
+    let res = calc.res ? parseFloat(calc.res) : 0;
 
-  const equalsClickHandler = 0;
+  setCalc({
+    ...calc,
+    num: (num /= Math.pow(100, 1)),
+    res: (res /= Math.pow(100, 1)),
+    sign: "",
+  });
+};
+
+  //When "="" is pressed 
+  const equalsClickHandler = () => {
+    console.log('= is pressed')
+    if(calc.sign && calc.num){
+      const math = (a, b, sign) => 
+        sign === "+"
+          ? a + b
+          : sign === "-"
+          ? a - b
+          : sign === "X"
+          ? a * b
+          : a / b;
+
+      setCalc({
+        ...calc,
+        res: 
+          calc.num === "0" && calc.sign === "/"
+            ? "Cannot divide with 0"
+            : math(Number(calc.res), Number(calc.num), calc.sign),
+            sign: "",
+            num: 0,
+      });
+    }
+  };
 
   //When *-/+ is pressed
   const signClickHandler = (e) => {
     e.preventDefault();
-     
+    const value = e.target.innerHTML;
+    console.log(`calc.res: ${calc.res}  !calc.res: ${!calc.res} calc.num: ${calc.num}`);
+    setCalc({
+      ...calc,
+      sign: value,
+      res: !calc.res && calc.num ? calc.num : calc.res,
+      num: 0,  
+    })
   };
 
   //It handles decimal point
