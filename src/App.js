@@ -66,6 +66,7 @@ const App = () => {
     console.log(`calc.num: ${calc.num} calc.res: ${calc.res}`);
   };
 
+  //Calculates the percentage 
   const percentClickHandler = () => {
     let num = calc.num ? parseFloat(removeSpaces(calc.num)) : 0;
     let res = calc.res ? parseFloat(removeSpaces(calc.res)) : 0;
