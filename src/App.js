@@ -19,6 +19,39 @@ const App = () => {
     res: 0,
   });
 
+  const numClickHandler = (e) => {
+    console.log(`e is ${e}`)
+    e.preventDefault();
+    const value = e.target.innerHTML;
+    
+    if(calc.num.length < 16){
+      setCalc({
+        ...calc,
+        num:
+          calc.num === 0 && value === "0"
+            ? "0"
+            : calc.num % 1 === 0
+            ? Number(calc.num + value)
+            : calc.num + value,
+        
+            res: !calc.sign ? 0 :calc.res,
+      })
+    }
+  }
+
+  const resetHandler = 0;
+
+  const invertClickHandler = 0;
+
+  const percentClickHandler = 0;
+
+  const equalsClickHandler = 0;
+
+  const signClickHandler = 0;
+
+  //It handles decimal point
+  const commaClickHandler = 0;
+
   return (
     <Wrapper>
       <Screen value={calc.num ? calc.num : calc.res} />
@@ -31,20 +64,20 @@ const App = () => {
                 className={btn === "=" ? "equals" : ""}
                 value={btn}
                 onClick={
-                  console.log(`${btn} clicked`)
-                  // btn === "C"
-                  //     ? resetHandler
-                  //     : btn === "+-"
-                  //     ? invertClickHandler
-                  //     : btn === "%"
-                  //     ? percentClickHandler
-                  //     : btn === "="
-                  //     ? equalsClickHandler
-                  //     : btn === "/" || btn === "X" || btn === "-" || btn === "+"
-                  //     ? signClickHandler
-                  //     : btn === "."
-                  //     ? commaClickHandler
-                  //     : numClickHandler
+                  //console.log(`i-${i}  btn-${btn}`);}
+                  btn === "C"
+                      ? resetHandler
+                      : btn === "+-"
+                      ? invertClickHandler
+                      : btn === "%"
+                      ? percentClickHandler
+                      : btn === "="
+                      ? equalsClickHandler
+                      : btn === "/" || btn === "X" || btn === "-" || btn === "+"
+                      ? signClickHandler
+                      : btn === "."
+                      ? commaClickHandler
+                      : numClickHandler
                 }
               />
             );
